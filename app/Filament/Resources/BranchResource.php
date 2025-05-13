@@ -91,13 +91,13 @@ class BranchResource extends Resource
                     ->boolean(),
                 Tables\Columns\TextColumn::make('slug')
                     ->label('Url')
-                    ->url(fn ($record) => 'https://ihma.webclub.uz/feedback/'.$record->slug)
+                    ->url(fn ($record) => env('FRONTEND_URL')."/feedback/$record->slug")
                     ->color('primary')
                     ->openUrlInNewTab()
-                    ->copyable(fn ($record) => 'https://ihma.webclub.uz/feedback/' . $record->slug)
+                    ->copyable(fn ($record) => env('FRONTEND_URL')."/feedback/$record->slug")
                     ->copyMessage('URL nusxalandi!')
                     ->copyMessageDuration(1500)
-                    ->formatStateUsing(fn ($record) => 'https://ihma.webclub.uz/feedback/'.$record->slug)
+                    ->formatStateUsing(fn ($record) => env('FRONTEND_URL')."/feedback/$record->slug")
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->label('Время создания')

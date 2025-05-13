@@ -29,7 +29,7 @@ class Branch extends Model
                 $count++;
             }
             
-            $url = "https://ihma.webclub.uz/feedback/{$slug}";
+            $url = env('FRONTEND_URL')."/feedback/{$slug}";
             $qrCode = QrCode::format('png')->size(500)->generate($url);
 
             $filePath = auth()->user()->name.'/' . $slug . '.png';
