@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Branch;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,3 +17,14 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return redirect('/admin');
 });
+
+
+Route::get('/download-qr/{branch}', function (Branch $branch) {
+    $path = $branch->qr_code_path;
+
+    if (!$path || !Storage::disk('public')->exists($path)) {
+        abort(404);
+    }
+
+    return Storage::disk('public')->download($path, 'qr-code.png');
+})->name('download.qr');

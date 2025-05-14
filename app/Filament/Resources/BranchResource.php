@@ -14,6 +14,7 @@ use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
 use Filament\Support\Enums\MaxWidth;
 use Filament\Tables;
+use Filament\Tables\Actions\Action;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
@@ -109,7 +110,14 @@ class BranchResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Action::make('download_qr')
+                    ->label('QR yuklash')
+                    ->icon('heroicon-m-arrow-down-tray')
+                    // ->url(fn ($record) => $record->qr_code_path ? Storage::disk('public')->url($record->qr_code_path) : '#', true) // true – bu yuklab olish uchun
+                    ->url(fn ($record) => route('download.qr', $record->id)) // routing orqali yuklab olish
+                    ->color('primary')
+                    ->tooltip('QR kodni yuklab olish')
+                    ->visible(fn ($record) => filled($record->qr_code_path)),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
